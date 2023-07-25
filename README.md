@@ -23,3 +23,96 @@ from openpyxl.styles import Alignment, PatternFill, Font
 from openpyxl.utils import get_column_letter
 ```
 
+2. **Load Data from JSON File**: Next, the script opens a JSON file named "9090.json" and loads the data into a Python dictionary.
+
+```python
+with open("9090.json", 'r', encoding='utf-8') as f:
+    data = json.load(f)
+```
+
+3. **Define a Dictionary to Map the Values of 'internal_messenger_type'**: The script defines a dictionary to map the values of 'internal_messenger_type' to more user-friendly names. This mapping is used later when processing the 'extra' field.
+
+```python
+messenger_type_mapping = {
+    'bale': 'بله',
+    'eitaa': 'ایتا',
+    'rubika': 'روبیکا',
+    'gap': 'گپ',
+    'soroush': 'سروش',
+    'igap': 'آی‌گپ'
+}
+```
+
+4. **Initialize an Empty List to Store Student Data**: A new list is initialized to store the student data that will be extracted from the JSON file.
+
+```python
+students_data = []
+```
+
+5. **Extract and Transform Data**: In this section, the script loops over each course, each group in the current course, and each student in the current group. It extracts the necessary information from the student dictionaries and stores it in new dictionaries with the desired keys (which will become the column names in the Excel file).
+
+```python
+for course in data['courses']:
+    for group in course['current_group']:
+        for student in group['students']:
+            student_data = {...}
+            students_data.append(student_data)
+```
+
+6. **Create a DataFrame from the Data**: The list of student data is then turned into a pandas DataFrame, which is a two-dimensional, size-mutable, heterogeneous tabular data structure that allows for manipulation of relational or labeled data.
+
+```python
+df = pd.DataFrame(students_data)
+```
+
+7. **Write the DataFrame to an Excel File**: The DataFrame is then written to an Excel file named "9090.xlsx".
+
+```python
+df.to_excel('9090.xlsx', index=False)
+```
+
+8. **Load the Excel File Back into Memory**: The Excel file is reloaded into memory to allow for further manipulation.
+
+```python
+wb = openpyxl.load_workbook('9090.xlsx')
+sheet = wb.active
+```
+
+9. **Define the Styles to Apply to the Cells**: The script then defines the styles to apply to the cells in the Excel file.
+
+```python
+font = Font(name='Vazirmatn')
+alignment = Alignment(horizontal='center', vertical='center')
+light_yellow_fill = PatternFill(start_color="FFFF99", end_color="FFFF99", fill_type="solid")
+light_green_fill = PatternFill(start_color="CCFFCC", end_color="CCFFCC", fill_type="solid")
+```
+
+10. **Apply the Styles to the Cells**: The styles are applied to each cell in the Excel file. If the cell is in the first row, it is filled with a light yellow color; otherwise, it is filled with a light green color.
+
+```python
+for row in sheet:
+    for cell in row:
+        cell.font = font
+        cell.alignment = alignment
+        cell.number_format = '@'  # Set number format to text
+        if cell.row == 1:
+            cell.fill = light_yellow_fill
+        else:
+            cell.fill = light_green_fill
+```
+
+10. **Adjust the Width of the Columns**: The script calculates the maximum length of the data in each column and adjusts the width of the columns accordingly.
+
+```python
+for column_cells in sheet.columns:
+    length = max(len(str(cell.value)) for cell in column_cells)
+    sheet.column_dimensions[get_column_letter(column_cells[0].column)].width = length
+```
+
+11. **Save the Changes Made to the Excel File**: Finally, the changes are saved back to the Excel file.
+
+```python
+wb.save('9090.xlsx')
+```
+
+## Usage
