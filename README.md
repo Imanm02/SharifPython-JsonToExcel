@@ -59,7 +59,7 @@ for course in data['courses']:
             students_data.append(student_data)
 ```
 
-6. **Create a DataFrame from the Data**: The list of student data is then turned into a pandas DataFrame, which is a two-dimensional, size-mutable, heterogeneous tabular data structure that allows for manipulation of relational or labeled data.
+6. **Create a DataFrame from the Data**: The list of student data is then turned into a pandas DataFrame, which is a two-dimensional, size-mutable, heterogeneous tabular data structure that allows for the manipulation of relational or labeled data.
 
 ```python
 df = pd.DataFrame(students_data)
@@ -116,3 +116,50 @@ wb.save('9090.xlsx')
 ```
 
 ## Usage
+
+To run the script, make sure the JSON file is located in the same directory as the script, then simply execute the script with a Python interpreter. You'll need to have `json`, `pandas`, and `openpyxl` installed in your Python environment.
+
+The script is designed to parse JSON files with a specific structure, so ensure your files follow the expected format. Here's an example of how the JSON file should be structured:
+
+```json
+{
+  "courses": [
+    {
+      "current_group": [
+        {
+          "students": [
+            {
+              "name": "...",
+              "surname": "...",
+              "gender": "...",
+              "email": "...",
+              "mobile_number": "...",
+              "national_code": "...",
+              "phone_number": "...",
+              "updated_at": "...",
+              "pivot": {
+                "status": "..."
+              },
+              "extra": {
+                "telegram_number": "...",
+                "whatsapp_number": "...",
+                "internal_messenger_type": "...",
+                "internal_messenger_number": "...",
+                "in_person_classes": "..."
+              }
+            },
+            ...
+          ]
+        },
+        ...
+      ]
+    },
+    ...
+  ]
+}
+```
+
+If your JSON files are structured differently, you must modify the script accordingly.
+
+# Maintainer
+- [Iman Mohammadi](https://github.com/Imanm02)
