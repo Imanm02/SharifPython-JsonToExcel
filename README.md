@@ -4,7 +4,7 @@ This repository contains a Python script designed to efficiently extract registr
 
 ## Features
 
-- **JSON Parsing**: The Python script can reliably read and interpret the JSON files containing registration data from the MicroMaster website.
+- **JSON Parsing**: The Python script can reliably read and interpret the JSON files containing registration data from the SharifPython website.
 - **Excel Export**: The extracted data is exported to an Excel file, making it easy to analyze and share the registration information.
 - **Automation**: The script is built to automate the data extraction process, saving users time and effort.
 
